@@ -1,4 +1,4 @@
-# eirene.cpp
+# eirene--
 A partial C++ port of Eirene.jl
 
 A work-in-progress C++ port of the core persistence algorithm from Eirene.jl                                                                                                                                        
