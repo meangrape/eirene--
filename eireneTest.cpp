@@ -2,7 +2,7 @@
 
 using std::vector;
 
-bool testLine()
+auto testLine()
 {
     eirene::SparseBool testComplex(3, 3);
     testComplex.emplace_at(true, 0, 2);
@@ -13,12 +13,10 @@ bool testLine()
     std::vector<float> testFilt{0.01, 0.02, 0.03};
     std::vector<uint32_t> eulerVec{2, 1};
 
-    eirene::eirene(testComplex, testFilt, eulerVec);
-
-    return true;
+    return eirene::eirene(testComplex, testFilt, eulerVec);
 }
 
-bool testTriangle()
+auto testTriangle()
 {
     eirene::SparseBool testComplex(6, 6);
 
@@ -36,12 +34,10 @@ bool testTriangle()
 
     //    std::cerr << testComplex << std::endl;
 
-    eirene::eirene(testComplex, testFilt, eulerVec);
-
-    return true;
+    return eirene::eirene(testComplex, testFilt, eulerVec);
 }
 
-bool testSphere()
+auto testSphere()
 {
     eirene::SparseBool testComplex(6, 6);
 
@@ -62,12 +58,10 @@ bool testSphere()
     auto testFilt = std::vector<float>{0.01, 0.02, 0.03, 0.04, 0.05, 0.06};
     auto eulerVec = std::vector<uint32_t>{2, 2, 2};
 
-    eirene::eirene(testComplex, testFilt, eulerVec);
-
-    return true;
+    return eirene::eirene(testComplex, testFilt, eulerVec);
 }
 
-bool testLingareddy()
+auto testLingareddy()
 {
     /*
      * Random complex, no filtration, from https://math.uchicago.edu/~may/REU2018/REUPapers/Lingareddy.pdf.
@@ -104,14 +98,23 @@ bool testLingareddy()
     auto testFilt = std::vector<float>(13, 0.01);
     auto eulerVec = std::vector<uint32_t>{5, 6, 2};
 
-    eirene::eirene(testComplex, testFilt, eulerVec);
-
-    return true;
+    return eirene::eirene(testComplex, testFilt, eulerVec);
 }
 
 int main()
 {
-    testLingareddy();
+    // testLingareddy();
+    auto out = std::get<std::vector<eirene::MorseReducedResult>>(testLine());
+    uint32_t dim = 0;
 
+    for (auto& homInfo : out)
+    {
+        std::cerr << "Cycle reps from dim " << dim << "\n";
+
+        for (auto& repInfo : homInfo.cycleReps)
+            print_vector<>(repInfo);
+
+        ++dim;
+    }
     return 0;
 }
